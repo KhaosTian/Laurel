@@ -11,13 +11,13 @@ add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
 add_rules("plugin.vsxmake.autoupdate")
 
 if is_mode("debug") then
-    add_defines("LAUREL_DEBUG")
+    add_defines("LR_DEBUG")
 elseif is_mode("release") then 
-    add_defines("LAUREL_RELEASE")
+    add_defines("LR_RELEASE")
 end
 
 if is_plat("windows") then
-    add_defines("LAUREL_PLATFORM_WINDOWS")
+    add_defines("LR_PLATFORM_WINDOWS")
 end
 
 local include_dirs= {
@@ -34,12 +34,10 @@ local link_dirs = {
     "external/vulkan"
 }
 
-target("MapleCore")
-    set_kind("static")
+target("Laurel")
+    set_kind("binary")
     add_includedirs(include_dirs)
     add_files("source/main.cpp")
-
     add_headerfiles("source/**.h")
-    
     add_linkdirs(link_dirs)
 target_end()

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifdef LAUREL_PLATFORM_WINDOWS
-    #include <Windows.h>
+#ifdef LR_PLATFORM_WINDOWS
+    #include <windows.h>
 #endif
 
 #include <algorithm>
@@ -26,3 +26,4 @@
 #include <vector>
 #include <filesystem>
 #include <thread>
+#include <source_location>
