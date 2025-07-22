@@ -36,6 +36,7 @@ local link_dirs = {
 
 target("Laurel")
     set_kind("binary")
+    set_pcheader("source/pch.h")
     add_includedirs(include_dirs)
     add_files("source/main.cpp")
     add_headerfiles("source/**.h")
