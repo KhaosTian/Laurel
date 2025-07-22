@@ -1,5 +1,5 @@
 #include "Core/Log.h"
-#include "Core/Base.h"
+#include "Core/Assert.h"
 int main() {
     LR::Log::init();
     LR_CORE_INFO("Laurel Engine Initialized");
