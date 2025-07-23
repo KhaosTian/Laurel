@@ -34,11 +34,21 @@ local link_dirs = {
     "external/vulkan"
 }
 
-target("Laurel")
-    set_kind("binary")
-    set_pcheader("source/pch.h")
+target("LaurelRuntime")
+    set_kind("static")
+    set_pcheader("source/Runtime/pch.h")
     add_includedirs(include_dirs)
-    add_files("source/main.cpp")
-    add_headerfiles("source/**.h")
+    add_files("source/Runtime/**.cpp")
+    add_headerfiles("source/Runtime/**.h")
+    add_linkdirs(link_dirs)
+target_end()
+
+target("LaurelEditor")
+    set_kind("binary")
+
+    add_deps("LaurelRuntime")
+    add_includedirs(include_dirs)
+    add_files("source/Editor/**.cpp")
+    add_headerfiles("source/Editor/**.h")
     add_linkdirs(link_dirs)
 target_end()

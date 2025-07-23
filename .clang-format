@@ -1,5 +1,4 @@
 BasedOnStyle: LLVM
-AlignAfterOpenBracket: BlockIndent
 AlignConsecutiveMacros: false
 AlignConsecutiveAssignments: true
 AlignConsecutiveDeclarations: true
