@@ -36,11 +36,17 @@ local link_dirs = {
 
 target("LaurelRuntime")
     set_kind("static")
+
     set_pcheader("source/Runtime/pch.h")
+
     add_includedirs(include_dirs)
-    add_files("source/Runtime/**.cpp")
-    add_headerfiles("source/Runtime/**.h")
     add_linkdirs(link_dirs)
+
+    add_files("source/Laurel/**.cpp")
+    remove_files("source/Laurel/Editor/**.cpp")
+
+    add_headerfiles("source/Laurel/**.h")
+    remove_headerfiles("source/Laurel/Editor/**.h")
 target_end()
 
 target("LaurelEditor")
@@ -48,7 +54,7 @@ target("LaurelEditor")
 
     add_deps("LaurelRuntime")
     add_includedirs(include_dirs)
-    add_files("source/Editor/**.cpp")
-    add_headerfiles("source/Editor/**.h")
+    add_files("source/Laurel/Editor/main.cpp")
+    add_headerfiles("source/Laurel/Editor/**.h")
     add_linkdirs(link_dirs)
 target_end()

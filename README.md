@@ -1,6 +1,7 @@
-# Laurel
 
 ![logo](gallery/laurel_logo_light.png)
+
+# Laurel
 
 ## 概述
 
