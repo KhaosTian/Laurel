@@ -19,19 +19,19 @@ class Window final {
     explicit Window(const WindowConfig& config);
     ~Window();
 
-    GLFWwindow*         handle() const { return m_handle; }
-    const WindowConfig& config() const { return m_config; }
+    GLFWwindow*         handle() const { return handle_; }
+    const WindowConfig& config() const { return config_; }
 
-    VkExtent2D               GetWindowSize() const;
-    std::vector<const char*> GetRequiredInstanceExtensions() const;
+    VkExtent2D               getWindowSize() const;
+    std::vector<const char*> getRequiredInstanceExtensions() const;
 
-    void PollEvents() const;
-    void WaitEvents() const;
-    bool ShouldClose() const;
+    void pollEvents() const;
+    void waitEvents() const;
+    bool shouldClose() const;
 
   private:
-    WindowConfig m_config;
-    GLFWwindow*  m_handle {};
+    WindowConfig config_;
+    GLFWwindow*  handle_ {};
 };
 
 } // namespace Vulkan

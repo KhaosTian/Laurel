@@ -2,12 +2,6 @@
 
 namespace LR {
 
-struct ApplicationDesc {
-    const char* name   = "Laurel Application";
-    int         width  = 1280;
-    int         height = 720;
-}
-
 class Application {
   public:
     void Run();
@@ -15,5 +9,9 @@ class Application {
 
     Application();
     virtual ~Application() = default;
+
+    virtual void OnInit() {}
+    virtual void OnUpdate() {}
+    virtual void OnShutdown() {}
 };
 } // namespace LR

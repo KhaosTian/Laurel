@@ -116,7 +116,7 @@ VkExtent2D Swapchain::ChooseSwapExtent(const Window& window, const VkSurfaceCapa
     }
 
     // 选择窗口大小
-    VkExtent2D actual_extent = window.GetWindowSize();
+    VkExtent2D actual_extent = window.getWindowSize();
     // 裁剪到表面支持的图像最小和最大尺寸之间
     actual_extent.width  = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actual_extent.width));
     actual_extent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actual_extent.height));
