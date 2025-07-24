@@ -6,7 +6,7 @@
 #include "Laurel/Vulkan/Core/Device.h"
 #include <functional>
 
-namespace Vulkan {
+namespace Laurel {
 class CommandBuffer final {
   public:
     static void Submit(CommandPool& cmd_pool, const std::function<void(VkCommandBuffer)>& action) {
@@ -29,4 +29,4 @@ class CommandBuffer final {
         vkQueueWaitIdle(graphics_queue);
     }
 };
-} // namespace Vulkan
+} // namespace Laurel

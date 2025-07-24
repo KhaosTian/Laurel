@@ -2,7 +2,7 @@
 #include "Laurel/Vulkan/Resource/ImageView.h"
 #include "Laurel/Vulkan/Core/Device.h"
 
-namespace Vulkan {
+namespace Laurel {
 
 ImageView::ImageView(const Device& device, const VkImage image, const VkFormat format, const VkImageAspectFlags aspect): m_device(device) {
     VkImageViewCreateInfo create_info = {};
@@ -32,4 +32,4 @@ ImageView::~ImageView() {
     vkDestroyImageView(m_device.handle(), m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

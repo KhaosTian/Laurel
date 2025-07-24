@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 DescriptorSets::DescriptorSets(const DescriptorPool& pool, const DescriptorSetLayout& layout, std::map<uint32_t, VkDescriptorType> binding_types, size_t size):
     m_descriptor_pool(pool),
     m_binding_types(std::move(binding_types)) {
@@ -61,4 +61,4 @@ VkDescriptorType DescriptorSets::GetBindingType(uint32_t binding) const {
     Throw(std::invalid_argument("binding not found"));
 }
 
-} // namespace Vulkan
+} // namespace Laurel

@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Instance;
 
 class DebugUtilsMessenger final {
@@ -29,4 +29,4 @@ class DebugUtilsMessenger final {
     inline void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback, const VkAllocationCallbacks* pAllocator);
 };
 
-} // namespace Vulkan
+} // namespace Laurel

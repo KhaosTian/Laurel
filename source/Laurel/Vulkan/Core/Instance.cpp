@@ -1,10 +1,10 @@
 #include "Laurel/Vulkan/Core/Instance.h"
 #include "Laurel/Vulkan/Core/Exception.h"
 #include "Laurel/Vulkan/Vulkan.h"
-#include "Laurel/Vulkan/Core/Window.h"
+#include "Laurel/Core/Window.h"
 #include "Laurel/Vulkan/Core/Enumerate.h"
 
-namespace Vulkan {
+namespace Laurel {
 Instance::Instance(const Window& window, const std::vector<const char*>& validation_layers): m_window(window) {
     // 初始化实例扩展
     m_instance_extensions = window.getRequiredInstanceExtensions();
@@ -66,4 +66,4 @@ Instance::~Instance() {
     vkDestroyInstance(m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

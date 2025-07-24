@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace Vulkan {
+namespace Laurel {
 class DescriptorBinding;
 class Device;
 class DescriptorPool final {
@@ -20,4 +20,4 @@ class DescriptorPool final {
     VkDescriptorPool m_handle;
     const Device&    m_device;
 };
-} // namespace Vulkan
+} // namespace Laurel

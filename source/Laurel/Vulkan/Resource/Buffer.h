@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class CommandPool;
 class Device;
 class DeviceMemory;
@@ -29,4 +29,4 @@ class Buffer final {
     VkDeviceAddress      GetDeviceAddress() const;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

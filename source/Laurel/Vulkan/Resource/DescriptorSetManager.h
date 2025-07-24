@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 class DescriptorSets;
 class DescriptorSetLayout;
@@ -27,4 +27,4 @@ class DescriptorSetManager final {
     std::unique_ptr<DescriptorSetLayout> m_set_layout;
     std::unique_ptr<DescriptorSets>      m_sets;
 };
-} // namespace Vulkan
+} // namespace Laurel

@@ -1,17 +1,25 @@
 #pragma once
 
-namespace LR {
+#include "Laurel/Core/Window.h"
 
-class Application {
+namespace Laurel {
+
+class IApplication {
   public:
-    void Run();
-    void Close();
+    IApplication(WindowConfig& config) {}
+    virtual ~IApplication() = default;
 
-    Application();
-    virtual ~Application() = default;
+    // 应用声明周期
+    virtual void OnInit()    = 0;
+    virtual void OnTick(double delta_seconds) = 0;
+    virtual void OnDestroy() = 0;
 
-    virtual void OnInit() {}
-    virtual void OnUpdate() {}
-    virtual void OnShutdown() {}
+    // 输入事件
+    virtual bool OnKey(int key, int scancode, int action, int mods) = 0;
+    virtual bool OnCursorPosition(double xpos, double ypos)         = 0;
+    virtual bool OnMouseButton(int button, int action, int mods)    = 0;
+    virtual bool OnScroll(double xoffset, double yoffset) { return false; }
 };
-} // namespace LR
+
+std::unique_ptr<IApplication> CreateApplication(WindowConfig& config);
+} // namespace Laurel

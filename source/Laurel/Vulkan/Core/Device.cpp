@@ -5,7 +5,7 @@
 #include "Laurel/Vulkan/Core/Enumerate.h"
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 
 Device::Device(VkPhysicalDevice physical_device, const Surface& surface, const std::vector<const char*>& required_extensions, const VkPhysicalDeviceFeatures& device_features):
     m_physical_device(physical_device),
@@ -99,4 +99,4 @@ Device::~Device() {
     m_handle = nullptr;
 }
 
-} // namespace Vulkan
+} // namespace Laurel

@@ -2,7 +2,7 @@
 #include "Laurel/Vulkan/Vulkan.h"
 #include "Laurel/Vulkan/Core/DebugUtilsMessenger.h"
 
-namespace Vulkan {
+namespace Laurel {
 
 inline VkResult DebugUtilsMessenger::CreateDebugUtilsMessengerEXT(VkInstance                                instance,
                                                                   const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
@@ -41,4 +41,4 @@ DebugUtilsMessenger::DebugUtilsMessenger(const Instance& instance): m_instance(i
 }
 DebugUtilsMessenger::~DebugUtilsMessenger() {
 }
-} // namespace Vulkan
+} // namespace Laurel

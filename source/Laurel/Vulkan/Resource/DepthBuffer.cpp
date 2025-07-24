@@ -6,7 +6,7 @@
 #include "Laurel/Vulkan/Resource/Image.h"
 #include "Laurel/Vulkan/Resource/ImageView.h"
 
-namespace Vulkan {
+namespace Laurel {
 DepthBuffer::DepthBuffer(CommandPool& cmd_pool, VkExtent2D extent):
     // 查找设备支持的深度格式
     m_format(FindDepthFormat(cmd_pool.device())),
@@ -81,4 +81,4 @@ VkFormat DepthBuffer::FindSupportFormat(const Device&                device,
     // 若无候选格式被支持，抛出异常（通常意味着设备不满足需求）
     Throw(std::runtime_error("Failed to find supported format. Check if device supports any of the candidate formats."));
 }
-} // namespace Vulkan
+} // namespace Laurel

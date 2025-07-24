@@ -4,7 +4,7 @@
 #include "Laurel/Vulkan/Core/Device.h"
 #include <cstdint>
 
-namespace Vulkan {
+namespace Laurel {
 DescriptorSetLayout::DescriptorSetLayout(const Device& device, const std::vector<DescriptorBinding>& descriptor_bindings): m_device(device) {
     std::vector<VkDescriptorSetLayoutBinding> layout_bindings;
 
@@ -29,4 +29,4 @@ DescriptorSetLayout::~DescriptorSetLayout() {
     vkDestroyDescriptorSetLayout(m_device.handle(), m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

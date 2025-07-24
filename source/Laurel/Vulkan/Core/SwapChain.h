@@ -5,10 +5,10 @@
 #include <cstdint>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
+class Window;
 class Device;
 class ImageView;
-class Window;
 
 struct SwapchainSupportDetails {
     VkSurfaceCapabilitiesKHR        capabilities;
@@ -48,7 +48,7 @@ class Swapchain final {
     static SwapchainSupportDetails QuerySwapchainSupport(VkPhysicalDevice physicalDevice, const VkSurfaceKHR surface);
     static VkSurfaceFormatKHR      ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& surface_formats);
     static VkPresentModeKHR        ChooseSwapPresentMode(const std::vector<VkPresentModeKHR>& present_modes, const VkPresentModeKHR desired_mode);
-    static VkExtent2D              ChooseSwapExtent(const Window& window, const VkSurfaceCapabilitiesKHR& capabilities);
+    static VkExtent2D              ChooseSwapExtent(const Laurel::Window& window, const VkSurfaceCapabilitiesKHR& capabilities);
     static uint32_t                ChooseImageCount(const VkSurfaceCapabilitiesKHR& capabilities);
 };
-} // namespace Vulkan
+} // namespace Laurel

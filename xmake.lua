@@ -34,27 +34,35 @@ local link_dirs = {
     "external/vulkan"
 }
 
-target("LaurelRuntime")
+target("Laurel")
     set_kind("static")
 
-    set_pcheader("source/Runtime/pch.h")
+    set_pcheader("source/Laurel/pch.h")
 
     add_includedirs(include_dirs)
     add_linkdirs(link_dirs)
 
-    add_files("source/Laurel/**.cpp")
-    remove_files("source/Laurel/Editor/**.cpp")
-
-    add_headerfiles("source/Laurel/**.h")
-    remove_headerfiles("source/Laurel/Editor/**.h")
+    add_files(
+        "source/*.cpp",
+        "source/Laurel/Core/**.cpp",
+        "source/Laurel/Vulkan/**.cpp"
+    )
+    add_headerfiles(
+        "source/*.h",
+        "source/Laurel/*.h",
+        "source/Laurel/Core/**.h",
+        "source/Laurel/Vulkan/**.h"
+    )
 target_end()
 
 target("LaurelEditor")
     set_kind("binary")
 
-    add_deps("LaurelRuntime")
+    add_deps("Laurel")
     add_includedirs(include_dirs)
-    add_files("source/Laurel/Editor/main.cpp")
-    add_headerfiles("source/Laurel/Editor/**.h")
     add_linkdirs(link_dirs)
+
+    add_files("source/Laurel/Editor/**.cpp")
+    add_headerfiles("source/Laurel/Editor/**.h")
+
 target_end()

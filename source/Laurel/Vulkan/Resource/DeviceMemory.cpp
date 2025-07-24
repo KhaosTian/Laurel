@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <stdexcept>
 
-namespace Vulkan {
+namespace Laurel {
 
 DeviceMemory::DeviceMemory(const Device& device, size_t size, uint32_t memory_type_bits, VkMemoryAllocateFlags allocate, VkMemoryPropertyFlags property): m_device(device) {
     VkMemoryAllocateFlagsInfo flags_info = {};
@@ -58,4 +58,4 @@ void DeviceMemory::Unmap() {
     vkUnmapMemory(m_device.handle(), m_handle);
 }
 
-} // namespace Vulkan
+} // namespace Laurel

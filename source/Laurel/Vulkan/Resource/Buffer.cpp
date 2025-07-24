@@ -2,7 +2,7 @@
 #include "Laurel/Vulkan/Resource/DeviceMemory.h"
 #include "Laurel/Vulkan/Command/CommandBuffer.h"
 
-namespace Vulkan {
+namespace Laurel {
 
 Buffer::Buffer(const Device& device, size_t size, VkBufferUsageFlags usage): m_device(device) {
     VkBufferCreateInfo create_info = {};
@@ -69,4 +69,4 @@ void Buffer::CopyTo(CommandPool& cmd_pool, const Buffer& dst, VkDeviceSize size)
     });
 }
 
-} // namespace Vulkan
+} // namespace Laurel

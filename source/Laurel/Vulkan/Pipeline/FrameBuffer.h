@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class ImageView;
 class RenderPass;
 class Device;
@@ -22,4 +22,4 @@ class Framebuffer final {
     VkFramebuffer m_handle;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

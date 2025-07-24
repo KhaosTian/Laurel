@@ -3,7 +3,7 @@
 #include "Laurel/Vulkan/Core/Surface.h"
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Surface;
 
 struct QueueFamilyIndices {
@@ -50,4 +50,4 @@ class Device final {
     void               CheckRequiredExtensionsSupport(const std::vector<const char*>& required_extensions) const;
     QueueFamilyIndices FindQueueFamilyIndices(const std::vector<VkQueueFamilyProperties> queue_families) const;
 };
-} // namespace Vulkan
+} // namespace Laurel

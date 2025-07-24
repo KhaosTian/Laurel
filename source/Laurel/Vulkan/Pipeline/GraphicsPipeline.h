@@ -3,7 +3,7 @@
 #include "Laurel/Vulkan/Vulkan.h"
 #include <memory>
 
-namespace Vulkan {
+namespace Laurel {
 class DepthBuffer;
 class PipelineLayout;
 class RenderPass;
@@ -32,4 +32,4 @@ class GraphicsPipeline final {
     std::unique_ptr<RenderPass>           m_swap_render_pass;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

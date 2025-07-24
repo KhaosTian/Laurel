@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 class DescriptorSetLayout;
 
@@ -19,4 +19,4 @@ class PipelineLayout final {
     VkPipelineLayout m_handle;
     const Device&    m_device;
 };
-} // namespace Vulkan
+} // namespace Laurel

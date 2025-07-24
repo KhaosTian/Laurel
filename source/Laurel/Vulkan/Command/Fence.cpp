@@ -3,7 +3,7 @@
 #include "Laurel/Vulkan/Command/Fence.h"
 #include "Laurel/Vulkan/Core/Device.h"
 
-namespace Vulkan {
+namespace Laurel {
 
 Fence::Fence(const Device& device, bool signaled): m_device(device) {
     VkFenceCreateInfo create_info {};
@@ -29,4 +29,4 @@ Fence::~Fence() {
     vkDestroyFence(m_device.handle(), m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

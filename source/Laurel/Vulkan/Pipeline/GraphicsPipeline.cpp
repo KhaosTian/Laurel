@@ -7,14 +7,14 @@
 #include "Laurel/Vulkan/Resource/DescriptorSetManager.h"
 #include "Laurel/Vulkan/Resource/DescriptorSetLayout.h"
 #include "Laurel/Vulkan/Resource/DescriptorSets.h"
-#include "Laurel/Vulkan/Resource/SwapChain.h"
+#include "Laurel/Vulkan/Core/SwapChain.h"
 #include "Laurel/Vulkan/Resource/DepthBuffer.h"
 #include "Laurel/Vulkan/Resource/ImageView.h"
 
 #include "Laurel/Vulkan/Core/Device.h"
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 
 GraphicsPipeline::GraphicsPipeline(const Swapchain& swapchain, const DepthBuffer& depth_buffer): m_swapchain(swapchain) {
     // 初始化
@@ -178,4 +178,4 @@ VkDescriptorSet GraphicsPipeline::descriptor_set(uint32_t index) const {
     return m_descriptor_set_manager->descriptor_sets().handle(index);
 }
 
-} // namespace Vulkan
+} // namespace Laurel

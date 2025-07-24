@@ -1,15 +1,15 @@
-
-#include "Laurel/Vulkan/Resource/SwapChain.h"
+#include "pch.h"
+#include "Laurel/Vulkan/Core/SwapChain.h"
 #include "Laurel/Vulkan/Core/Device.h"
 #include "Laurel/Vulkan/Core/Enumerate.h"
 #include "Laurel/Vulkan/Core/Surface.h"
 #include "Laurel/Vulkan/Core/Instance.h"
 #include "Laurel/Vulkan/Vulkan.h"
-#include "Laurel/Vulkan/Core/Window.h"
+#include "Laurel/Core/Window.h"
 #include "Laurel/Vulkan/Resource/ImageView.h"
 #include <cstdint>
 
-namespace Vulkan {
+namespace Laurel {
 
 Swapchain::Swapchain(const Device& device, const VkPresentModeKHR desired_mode): m_device(device), m_physical_device(device.physical_device()) {
     // 获取surface和windows
@@ -109,14 +109,14 @@ VkPresentModeKHR Swapchain::ChooseSwapPresentMode(const std::vector<VkPresentMod
     return present_modes.front();
 }
 
-VkExtent2D Swapchain::ChooseSwapExtent(const Window& window, const VkSurfaceCapabilitiesKHR& capabilities) {
+VkExtent2D Swapchain::ChooseSwapExtent(const Laurel::Window& window, const VkSurfaceCapabilitiesKHR& capabilities) {
     // 只有当前宽高为UINT32_MAX时，才表示宽高可以由我们自己决定
     if (capabilities.currentExtent.width != UINT32_MAX) {
         return capabilities.currentExtent;
     }
 
     // 选择窗口大小
-    VkExtent2D actual_extent = window.getWindowSize();
+    VkExtent2D actual_extent = window.GetWindowSize();
     // 裁剪到表面支持的图像最小和最大尺寸之间
     actual_extent.width  = std::max(capabilities.minImageExtent.width, std::min(capabilities.maxImageExtent.width, actual_extent.width));
     actual_extent.height = std::max(capabilities.minImageExtent.height, std::min(capabilities.maxImageExtent.height, actual_extent.height));
@@ -140,4 +140,4 @@ Swapchain::~Swapchain() {
     m_handle = nullptr;
 }
 
-} // namespace Vulkan
+} // namespace Laurel

@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace Vulkan {
+namespace Laurel {
 CommandBuffers::CommandBuffers(CommandPool& cmd_pool, uint32_t size): m_cmd_pool(cmd_pool) {
     VkCommandBufferAllocateInfo allocate_info = {};
     allocate_info.sType                       = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -39,4 +39,4 @@ void CommandBuffers::End(size_t i) {
     VK_CHECK(vkEndCommandBuffer(m_cmds[i]), "record command buffer");
 }
 
-} // namespace Vulkan
+} // namespace Laurel

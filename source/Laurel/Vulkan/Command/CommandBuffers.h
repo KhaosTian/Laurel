@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 class CommandPool;
 class CommandBuffers final {
   public:
@@ -24,4 +24,4 @@ class CommandBuffers final {
     std::vector<VkCommandBuffer> m_cmds;
     const CommandPool&           m_cmd_pool;
 };
-} // namespace Vulkan
+} // namespace Laurel

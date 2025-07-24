@@ -3,7 +3,7 @@
 #include "Laurel/Vulkan/Core/Device.h"
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 
 class Fence final {
@@ -22,4 +22,4 @@ class Fence final {
     VkFence       m_handle {};
     const Device& m_device;
 };
-} // namespace Vulkan
+} // namespace Laurel

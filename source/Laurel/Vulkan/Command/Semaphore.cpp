@@ -1,7 +1,7 @@
 #include "Laurel/Vulkan/Command/Semaphore.h"
 #include "Laurel/Vulkan/Core/Device.h"
 
-namespace Vulkan {
+namespace Laurel {
 Semaphore::Semaphore(const Device& device): m_device(device) {
     VkSemaphoreCreateInfo create_info = {};
     create_info.sType                 = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -18,4 +18,4 @@ Semaphore::~Semaphore() {
     vkDestroySemaphore(m_device.handle(), m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

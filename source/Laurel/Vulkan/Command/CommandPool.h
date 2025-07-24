@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 class CommandPool final {
   public:
@@ -19,4 +19,4 @@ class CommandPool final {
     const Device& m_device;
     VkQueue       m_queue;
 };
-} // namespace Vulkan
+} // namespace Laurel

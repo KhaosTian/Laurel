@@ -3,7 +3,7 @@
 #include "Laurel/Vulkan/Vulkan.h"
 #include <cstdint>
 
-namespace Vulkan {
+namespace Laurel {
 class CommandPool;
 class Device;
 class Buffer;
@@ -36,4 +36,4 @@ class Image final {
     VkImageLayout    m_image_layout;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

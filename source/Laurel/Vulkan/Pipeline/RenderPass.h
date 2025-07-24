@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class DepthBuffer;
 class Swapchain;
 
@@ -32,4 +32,4 @@ class RenderPass final {
     VkRenderPass       m_handle;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

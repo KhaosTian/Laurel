@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Window;
 
 class Instance final {
@@ -26,4 +26,4 @@ class Instance final {
 
     void CheckValidationLayersSupport(const std::vector<const char*>& validation_layers) const;
 };
-} // namespace Vulkan
+} // namespace Laurel

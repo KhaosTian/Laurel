@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 
 class Instance;
 class Window;
@@ -21,4 +21,4 @@ class Surface final {
     VkSurfaceKHR    m_handle;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

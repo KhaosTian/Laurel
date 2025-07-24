@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 
 struct SamplerConfig final {
@@ -42,4 +42,4 @@ class Sampler final {
     const Device& m_device;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

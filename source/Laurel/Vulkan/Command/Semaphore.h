@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 class Semaphore final {
   public:
@@ -16,4 +16,4 @@ class Semaphore final {
     VkSemaphore   m_handle;
     const Device& m_device;
 };
-} // namespace Vulkan
+} // namespace Laurel

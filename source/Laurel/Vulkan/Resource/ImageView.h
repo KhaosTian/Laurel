@@ -1,7 +1,7 @@
 #pragma once
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 class ImageView final {
   public:
@@ -17,4 +17,4 @@ class ImageView final {
     const Device& m_device;
 };
 
-} // namespace Vulkan
+} // namespace Laurel

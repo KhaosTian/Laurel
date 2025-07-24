@@ -3,7 +3,7 @@
 #include "Laurel/Vulkan/Core/Exception.h"
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 Sampler::Sampler(const Device& device, const SamplerConfig& config): m_device(device) {
     VkSamplerCreateInfo create_info = {};
 
@@ -39,4 +39,4 @@ Sampler::~Sampler() {
     vkDestroySampler(m_device.handle(), m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

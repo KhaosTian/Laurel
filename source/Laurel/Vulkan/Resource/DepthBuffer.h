@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 class CommandPool;
 class Device;
 class Image;
@@ -28,4 +28,4 @@ class DepthBuffer final {
     VkFormat FindSupportFormat(const Device& device, const std::vector<VkFormat>& candidates, const VkImageTiling tiling, const VkFormatFeatureFlags feature);
 };
 
-} // namespace Vulkan
+} // namespace Laurel

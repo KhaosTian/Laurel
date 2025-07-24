@@ -1,5 +1,5 @@
 #include "Laurel/Vulkan/Pipeline/RenderPass.h"
-#include "Laurel/Vulkan/Resource/SwapChain.h"
+#include "Laurel/Vulkan/Core/SwapChain.h"
 #include "Laurel/Vulkan/Resource/DepthBuffer.h"
 #include "Laurel/Vulkan/Resource/ImageView.h"
 #include "Laurel/Vulkan/Core/Device.h"
@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 RenderPass::RenderPass(const Swapchain& swapchain, const DepthBuffer& depth_buffer, VkAttachmentLoadOp color_buffer_load_op): m_swapchain(swapchain), m_depth_buffer((depth_buffer)) {
     VkAttachmentDescription color_attachment = {};
     color_attachment.format                  = swapchain.format();
@@ -268,4 +268,4 @@ RenderPass::~RenderPass() {
     vkDestroyRenderPass(m_swapchain.device().handle(), m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

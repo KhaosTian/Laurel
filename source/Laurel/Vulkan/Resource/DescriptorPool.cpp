@@ -3,7 +3,7 @@
 #include "Laurel/Vulkan/Vulkan.h"
 #include "Laurel/Vulkan/Core/Device.h"
 
-namespace Vulkan {
+namespace Laurel {
 DescriptorPool::DescriptorPool(const Device& device, const std::vector<DescriptorBinding>& descriptor_bindings, size_t max_sets): m_device(device) {
     std::vector<VkDescriptorPoolSize> pool_sizes;
 
@@ -30,4 +30,4 @@ DescriptorPool::~DescriptorPool() {
     vkDestroyDescriptorPool(m_device.handle(), m_handle, nullptr);
     m_handle = nullptr;
 }
-} // namespace Vulkan
+} // namespace Laurel

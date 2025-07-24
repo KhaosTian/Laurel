@@ -1,8 +1,9 @@
 #include "Laurel/Core/Log.h"
 #include "Laurel/Core/Assert.h"
+#include "EditorMain.h"
 
 int main() {
-    LR::Log::init();
+    Laurel::Log::Init();
     LR_INFO("Laurel Engine Initialized");
     int error = 1;
 
@@ -10,4 +11,13 @@ int main() {
 
     LR_ASSERT(false, "This is a test assertion");
     return 1;
+}
+
+LaurelEditorApplication::LaurelEditorApplication(Laurel::WindowConfig& config) {
+}
+
+void LaurelEditorApplication::OnInit() {
+}
+
+void LaurelEditorApplication::OnTick(double delta_seconds) {
 }

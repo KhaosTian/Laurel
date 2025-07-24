@@ -9,7 +9,7 @@
 #include "Laurel/Vulkan/Resource/Image.h"
 #include "Laurel/Vulkan/Core/Exception.h"
 
-namespace Vulkan {
+namespace Laurel {
 Image::Image(const Device& device, VkExtent2D extent, uint32_t mip_level, VkFormat format):
     Image(device, extent, mip_level, format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT) {
 }
@@ -146,4 +146,4 @@ bool Image::HasStencilComponent(const VkFormat format) {
     return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
 }
 
-} // namespace Vulkan
+} // namespace Laurel

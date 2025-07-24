@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 
 class ShaderModule final {
@@ -24,4 +24,4 @@ class ShaderModule final {
 
     static std::vector<uint8_t> ReadFile(const std::string& filename);
 };
-} // namespace Vulkan
+} // namespace Laurel

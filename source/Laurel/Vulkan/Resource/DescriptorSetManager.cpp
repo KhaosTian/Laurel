@@ -7,7 +7,7 @@
 #include "Laurel/Vulkan/Core/Device.h"
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 DescriptorSetManager::DescriptorSetManager(const Device& device, const std::vector<DescriptorBinding>& bindings, size_t max_sets) {
     // 根据传入的bindings构建binding和type的映射
     std::map<uint32_t, VkDescriptorType> binding_types;
@@ -30,4 +30,4 @@ DescriptorSetManager::~DescriptorSetManager() {
     m_pool.reset();
 }
 
-} // namespace Vulkan
+} // namespace Laurel

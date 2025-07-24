@@ -2,13 +2,13 @@
 #include "Laurel/Vulkan/Resource/DepthBuffer.h"
 #include "Laurel/Vulkan/Resource/ImageView.h"
 #include "Laurel/Vulkan/Pipeline/RenderPass.h"
-#include "Laurel/Vulkan/Resource/SwapChain.h"
+#include "Laurel/Vulkan/Core/SwapChain.h"
 #include "Laurel/Vulkan/Core/Device.h"
 #include "Laurel/Vulkan/Vulkan.h"
 #include <cstdint>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 Framebuffer::Framebuffer(const ImageView& image_view, const RenderPass& render_pass, bool with_ds): m_device(image_view.device()) {
     std::vector<VkImageView> attachments = { image_view.handle() };
 
@@ -53,4 +53,4 @@ Framebuffer::~Framebuffer() {
     m_handle = nullptr;
 }
 
-} // namespace Vulkan
+} // namespace Laurel

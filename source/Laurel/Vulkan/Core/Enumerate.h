@@ -2,7 +2,7 @@
 
 #include "Laurel/Vulkan/Vulkan.h"
 
-namespace Vulkan {
+namespace Laurel {
 
 template<class TValue>
 inline void GetEnumerateVector(VkResult(enumerate)(uint32_t*, TValue*), std::vector<TValue>& vector) {
@@ -68,4 +68,4 @@ inline std::vector<TValue> GetEnumerateVector(THandle1 handle1, THandle2 handle2
     return initial;
 }
 
-} // namespace Vulkan
+} // namespace Laurel

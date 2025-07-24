@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace Vulkan {
+namespace Laurel {
 class Device;
 class DescriptorSetLayout;
 class DescriptorPool;
@@ -32,4 +32,4 @@ class DescriptorSets final {
 
     VkDescriptorType GetBindingType(uint32_t binding) const;
 };
-} // namespace Vulkan
+} // namespace Laurel
