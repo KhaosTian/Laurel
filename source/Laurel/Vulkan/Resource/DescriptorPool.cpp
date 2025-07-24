@@ -22,7 +22,7 @@ DescriptorPool::DescriptorPool(const Device& device, const std::vector<Descripto
     create_info.maxSets                    = static_cast<uint32_t>(max_sets);
     create_info.pPoolSizes                 = pool_sizes.data();
 
-    VK_CHECK(vkCreateDescriptorPool(m_device.handle(), &create_info, nullptr, &m_handle), "create descriptor pool");
+    Check(vkCreateDescriptorPool(m_device.handle(), &create_info, nullptr, &m_handle), "create descriptor pool");
 }
 
 DescriptorPool::~DescriptorPool() {

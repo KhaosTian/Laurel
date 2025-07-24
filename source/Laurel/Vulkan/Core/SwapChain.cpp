@@ -58,7 +58,7 @@ Swapchain::Swapchain(const Device& device, const VkPresentModeKHR desired_mode):
     }
 
     // 创建交换链
-    VK_CHECK(vkCreateSwapchainKHR(m_device.handle(), &create_info, nullptr, &m_handle), "create swap chain");
+    Check(vkCreateSwapchainKHR(m_device.handle(), &create_info, nullptr, &m_handle), "create swap chain");
 
     // 枚举交换链图像
     m_images = GetEnumerateVector(m_device.handle(), m_handle, vkGetSwapchainImagesKHR);

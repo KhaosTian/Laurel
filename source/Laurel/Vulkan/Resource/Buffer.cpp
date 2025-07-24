@@ -11,7 +11,7 @@ Buffer::Buffer(const Device& device, size_t size, VkBufferUsageFlags usage): m_d
     create_info.usage              = usage;
     create_info.sharingMode        = VK_SHARING_MODE_EXCLUSIVE;
 
-    VK_CHECK(vkCreateBuffer(device.handle(), &create_info, nullptr, &m_handle), "create buffer");
+    Check(vkCreateBuffer(device.handle(), &create_info, nullptr, &m_handle), "create buffer");
 }
 
 Buffer::~Buffer() {
@@ -35,7 +35,7 @@ DeviceMemory Buffer::AllocateMemory(VkMemoryAllocateFlags allocate, VkMemoryProp
 
     DeviceMemory memory(m_device, requirements.size, requirements.memoryTypeBits, allocate, property);
 
-    VK_CHECK(vkBindBufferMemory(m_device.handle(), m_handle, memory.handle(), 0), "bind buffer memory");
+    Check(vkBindBufferMemory(m_device.handle(), m_handle, memory.handle(), 0), "bind buffer memory");
 
     return memory;
 }

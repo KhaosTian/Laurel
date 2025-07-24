@@ -22,7 +22,7 @@ DescriptorSets::DescriptorSets(const DescriptorPool& pool, const DescriptorSetLa
 
     m_descriptor_sets.resize(size);
 
-    VK_CHECK(vkAllocateDescriptorSets(m_descriptor_pool.device().handle(), nullptr, m_descriptor_sets.data()), "create descriptor sets");
+    Check(vkAllocateDescriptorSets(m_descriptor_pool.device().handle(), nullptr, m_descriptor_sets.data()), "create descriptor sets");
 }
 
 VkWriteDescriptorSet DescriptorSets::Bind(uint32_t index, uint32_t binding, const VkDescriptorBufferInfo& buffer_info, uint32_t count) const {

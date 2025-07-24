@@ -44,7 +44,7 @@ Device::Device(VkPhysicalDevice physical_device, const Surface& surface, const s
     device_create_info.enabledLayerCount       = 0;
 
     // 创建逻辑设备
-    VK_CHECK(vkCreateDevice(m_physical_device, &device_create_info, nullptr, &m_handle), "create logical device");
+    Check(vkCreateDevice(m_physical_device, &device_create_info, nullptr, &m_handle), "create logical device");
 
     // 获取队列句柄
     vkGetDeviceQueue(m_handle, m_queue_indices.graphics, 0, &m_queue_graphics);
@@ -89,7 +89,7 @@ QueueFamilyIndices Device::FindQueueFamilyIndices(const std::vector<VkQueueFamil
 }
 
 void Device::WaitIdle() const {
-    VK_CHECK(vkDeviceWaitIdle(m_handle), "wait for device idle");
+    Check(vkDeviceWaitIdle(m_handle), "wait for device idle");
 }
 
 Device::~Device() {

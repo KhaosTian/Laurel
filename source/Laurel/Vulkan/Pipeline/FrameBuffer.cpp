@@ -25,7 +25,7 @@ Framebuffer::Framebuffer(const ImageView& image_view, const RenderPass& render_p
     create_info.height                  = render_pass.swapchain().extent().height;
     create_info.layers                  = 1;
 
-    VK_CHECK(vkCreateFramebuffer(image_view.device().handle(), &create_info, nullptr, &m_handle), "create framebuffer");
+    Check(vkCreateFramebuffer(image_view.device().handle(), &create_info, nullptr, &m_handle), "create framebuffer");
 }
 
 Framebuffer::Framebuffer(const ImageView& image_view, const ImageView& image_view1, const ImageView& image_view2, const RenderPass& render_pass): m_device(image_view.device()) {
@@ -40,7 +40,7 @@ Framebuffer::Framebuffer(const ImageView& image_view, const ImageView& image_vie
     create_info.height                  = render_pass.swapchain().extent().height;
     create_info.layers                  = 1;
 
-    VK_CHECK(vkCreateFramebuffer(image_view.device().handle(), &create_info, nullptr, &m_handle), "create framebuffer");
+    Check(vkCreateFramebuffer(image_view.device().handle(), &create_info, nullptr, &m_handle), "create framebuffer");
 }
 
 Framebuffer::Framebuffer(Framebuffer&& other) noexcept: m_device(other.m_device), m_handle(other.m_handle) {

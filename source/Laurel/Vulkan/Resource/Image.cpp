@@ -34,7 +34,7 @@ Image::Image(const Device& device, VkExtent2D extent, uint32_t mip_level, VkForm
     create_info.samples           = VK_SAMPLE_COUNT_1_BIT;
     create_info.flags             = 0;
 
-    VK_CHECK(vkCreateImage(m_device.handle(), &create_info, nullptr, &m_handle), "create image");
+    Check(vkCreateImage(m_device.handle(), &create_info, nullptr, &m_handle), "create image");
 }
 
 Image::~Image() {
@@ -46,7 +46,7 @@ Image::~Image() {
 DeviceMemory Image::AllocateMemory(VkMemoryPropertyFlags property) const {
     const auto   requirements = GetMemoryRequirements();
     DeviceMemory memory(m_device, requirements.size, requirements.memoryTypeBits, 0, property);
-    VK_CHECK(vkBindImageMemory(m_device.handle(), m_handle, memory.handle(), 0), "bind image memory");
+    Check(vkBindImageMemory(m_device.handle(), m_handle, memory.handle(), 0), "bind image memory");
 
     return memory;
 }

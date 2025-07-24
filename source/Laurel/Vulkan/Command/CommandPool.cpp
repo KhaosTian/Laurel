@@ -11,7 +11,7 @@ CommandPool::CommandPool(const Device& device, uint32_t queue_family_index, uint
 
     m_queue = device.graphics_queue();
 
-    VK_CHECK(vkCreateCommandPool(device.handle(), &create_info, nullptr, &m_handle), "create command pool");
+    Check(vkCreateCommandPool(device.handle(), &create_info, nullptr, &m_handle), "create command pool");
 }
 
 CommandPool::~CommandPool() {

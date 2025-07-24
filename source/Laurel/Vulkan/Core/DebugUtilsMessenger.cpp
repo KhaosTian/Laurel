@@ -37,7 +37,7 @@ DebugUtilsMessenger::DebugUtilsMessenger(const Instance& instance): m_instance(i
     create_info.pfnUserCallback = DebugCallback;
     create_info.pUserData       = nullptr;
 
-    VK_CHECK(CreateDebugUtilsMessengerEXT(instance.handle(), &create_info, nullptr, &m_handle), "create debug utils meesenger");
+    Check(CreateDebugUtilsMessengerEXT(instance.handle(), &create_info, nullptr, &m_handle), "create debug utils meesenger");
 }
 DebugUtilsMessenger::~DebugUtilsMessenger() {
 }

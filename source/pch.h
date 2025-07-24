@@ -42,3 +42,5 @@
 #include "Laurel/Core/Base.h"
 #include "Laurel/Core/Log.h"
 #include "Laurel/Core/Math.h"
+
+#include "Laurel/Utils/NonCopyable.h"

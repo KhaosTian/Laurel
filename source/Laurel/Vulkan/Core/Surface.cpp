@@ -5,7 +5,7 @@
 
 namespace Laurel {
 Surface::Surface(const Instance& instance): m_instance(instance) {
-    VK_CHECK(glfwCreateWindowSurface(instance.handle(), instance.window().handle(), nullptr, &m_handle), "create window surface");
+    Check(glfwCreateWindowSurface(instance.handle(), instance.window().handle(), nullptr, &m_handle), "create window surface");
 }
 
 Surface::~Surface() {

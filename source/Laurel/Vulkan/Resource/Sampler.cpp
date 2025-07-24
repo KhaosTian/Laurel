@@ -31,7 +31,7 @@ Sampler::Sampler(const Device& device, const SamplerConfig& config): m_device(de
     create_info.minLod = config.min_lod;
     create_info.maxLod = config.max_lod;
 
-    VK_CHECK(vkCreateSampler(m_device.handle(), &create_info, nullptr, &m_handle), "create sampler");
+    Check(vkCreateSampler(m_device.handle(), &create_info, nullptr, &m_handle), "create sampler");
 }
 
 Sampler::~Sampler() {

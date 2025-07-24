@@ -159,7 +159,7 @@ GraphicsPipeline::GraphicsPipeline(const Swapchain& swapchain, const DepthBuffer
     graphics_pipeline.basePipelineHandle  = nullptr;
     graphics_pipeline.basePipelineIndex   = -1;
 
-    VK_CHECK(vkCreateGraphicsPipelines(device.handle(), nullptr, 1, &graphics_pipeline, nullptr, &m_handle), "create graphics pipeline");
+    Check(vkCreateGraphicsPipelines(device.handle(), nullptr, 1, &graphics_pipeline, nullptr, &m_handle), "create graphics pipeline");
 }
 
 GraphicsPipeline::~GraphicsPipeline() {

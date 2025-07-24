@@ -15,7 +15,7 @@ CommandBuffers::CommandBuffers(CommandPool& cmd_pool, uint32_t size): m_cmd_pool
 
     m_cmds.resize(size);
 
-    VK_CHECK(vkAllocateCommandBuffers(cmd_pool.device().handle(), &allocate_info, m_cmds.data()), "allocate command buffers");
+    Check(vkAllocateCommandBuffers(cmd_pool.device().handle(), &allocate_info, m_cmds.data()), "allocate command buffers");
 }
 
 CommandBuffers::~CommandBuffers() {
@@ -30,13 +30,13 @@ VkCommandBuffer CommandBuffers::Begin(size_t i) {
     info.flags                    = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
     info.pInheritanceInfo         = nullptr;
 
-    VK_CHECK(vkBeginCommandBuffer(m_cmds[i], &info), "beigin recording command buffer");
+    Check(vkBeginCommandBuffer(m_cmds[i], &info), "beigin recording command buffer");
 
     return m_cmds[i];
 }
 
 void CommandBuffers::End(size_t i) {
-    VK_CHECK(vkEndCommandBuffer(m_cmds[i]), "record command buffer");
+    Check(vkEndCommandBuffer(m_cmds[i]), "record command buffer");
 }
 
 } // namespace Laurel

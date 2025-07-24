@@ -21,7 +21,7 @@ DeviceMemory::DeviceMemory(const Device& device, size_t size, uint32_t memory_ty
     allocate_info.allocationSize  = size;
     allocate_info.memoryTypeIndex = FindMemopryType(memory_type_bits, property);
 
-    VK_CHECK(vkAllocateMemory(device.handle(), &allocate_info, nullptr, &m_handle), "allocate memory");
+    Check(vkAllocateMemory(device.handle(), &allocate_info, nullptr, &m_handle), "allocate memory");
 };
 
 DeviceMemory::DeviceMemory(DeviceMemory&& other) noexcept: m_device(other.m_device), m_handle(other.m_handle) {
@@ -50,7 +50,7 @@ uint32_t DeviceMemory::FindMemopryType(uint32_t type_filter, VkMemoryPropertyFla
 
 void* DeviceMemory::Map(size_t offset, size_t size) {
     void* data;
-    VK_CHECK(vkMapMemory(m_device.handle(), m_handle, offset, size, 0, &data), "map memory");
+    Check(vkMapMemory(m_device.handle(), m_handle, offset, size, 0, &data), "map memory");
     return data;
 }
 

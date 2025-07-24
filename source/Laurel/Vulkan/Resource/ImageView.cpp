@@ -24,7 +24,7 @@ ImageView::ImageView(const Device& device, const VkImage image, const VkFormat f
     create_info.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
     create_info.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
 
-    VK_CHECK(vkCreateImageView(m_device.handle(), &create_info, nullptr, &m_handle), "create image view");
+    Check(vkCreateImageView(m_device.handle(), &create_info, nullptr, &m_handle), "create image view");
 }
 
 ImageView::~ImageView() {

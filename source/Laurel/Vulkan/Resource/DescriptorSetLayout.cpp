@@ -22,7 +22,7 @@ DescriptorSetLayout::DescriptorSetLayout(const Device& device, const std::vector
     create_info.bindingCount                    = static_cast<uint32_t>(layout_bindings.size());
     create_info.pBindings                       = layout_bindings.data();
 
-    VK_CHECK(vkCreateDescriptorSetLayout(m_device.handle(), &create_info, nullptr, &m_handle), "create descriptor set layout");
+    Check(vkCreateDescriptorSetLayout(m_device.handle(), &create_info, nullptr, &m_handle), "create descriptor set layout");
 }
 DescriptorSetLayout::~DescriptorSetLayout() {
     if (m_handle == nullptr) return;

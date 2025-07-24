@@ -32,7 +32,7 @@ Instance::Instance(const Window& window, const std::vector<const char*>& validat
     create_info.ppEnabledLayerNames     = validation_layers.data();
 
     // 创建实例
-    VK_CHECK(vkCreateInstance(&create_info, nullptr, &m_handle), "create vulkan instance");
+    Check(vkCreateInstance(&create_info, nullptr, &m_handle), "create vulkan instance");
 
     // 枚举物理设备
     m_physical_devices = GetEnumerateVector(m_handle, vkEnumeratePhysicalDevices);

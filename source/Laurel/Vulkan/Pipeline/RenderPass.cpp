@@ -49,7 +49,7 @@ RenderPass::RenderPass(const Swapchain& swapchain, const DepthBuffer& depth_buff
     create_info.dependencyCount        = 1;
     create_info.pDependencies          = &dependency;
 
-    VK_CHECK(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
+    Check(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
 }
 RenderPass::RenderPass(const Swapchain& swapchain, const DepthBuffer& depth_buffer, VkAttachmentLoadOp color_buffer_load_op, VkAttachmentLoadOp depth_buffer_load_op):
     m_swapchain(swapchain),
@@ -110,7 +110,7 @@ RenderPass::RenderPass(const Swapchain& swapchain, const DepthBuffer& depth_buff
     create_info.dependencyCount        = 1;
     create_info.pDependencies          = &dependency;
 
-    VK_CHECK(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
+    Check(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
 }
 RenderPass::RenderPass(const Swapchain& swapchain, VkFormat format, const DepthBuffer& depth_buffer, VkAttachmentLoadOp color_buffer_load_op, VkAttachmentLoadOp depth_buffer_load_op):
     m_swapchain(swapchain),
@@ -171,7 +171,7 @@ RenderPass::RenderPass(const Swapchain& swapchain, VkFormat format, const DepthB
     create_info.dependencyCount        = 1;
     create_info.pDependencies          = &dependency;
 
-    VK_CHECK(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
+    Check(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
 }
 RenderPass::RenderPass(const Swapchain&   swapchain,
                        VkFormat           format,
@@ -260,7 +260,7 @@ RenderPass::RenderPass(const Swapchain&   swapchain,
     create_info.dependencyCount        = 1;
     create_info.pDependencies          = &dependency;
 
-    VK_CHECK(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
+    Check(vkCreateRenderPass(swapchain.device().handle(), &create_info, nullptr, &m_handle), "create render pass");
 }
 
 RenderPass::~RenderPass() {

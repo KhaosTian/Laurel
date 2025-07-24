@@ -1,10 +1,8 @@
 #pragma once
 
-#include <functional>
-
+namespace Laurel {
 class Vector2f;
 
-namespace Laurel {
 struct WindowConfig {
     uint32_t    width;
     uint32_t    height;
@@ -13,10 +11,9 @@ struct WindowConfig {
     bool        enable_resize;
 };
 
-class Window {
+class Window : NonCopyable{
   public:
-    Window(Window&&) = delete;
-    explicit Window(const WindowConfig& config);
+    Window(const WindowConfig& config);
     ~Window();
 
     GLFWwindow*         handle() const { return m_handle; }
