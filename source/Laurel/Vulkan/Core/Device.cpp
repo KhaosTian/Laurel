@@ -1,9 +1,8 @@
+#include "pch.h"
+#include "Laurel/Vulkan/Vulkan.h"
 #include "Laurel/Vulkan/Core/Device.h"
-
-#include "Laurel/Vulkan/Core/Exception.h"
 #include "Laurel/Vulkan/Core/Surface.h"
 #include "Laurel/Vulkan/Core/Enumerate.h"
-#include "Laurel/Vulkan/Vulkan.h"
 
 namespace Laurel {
 
@@ -65,9 +64,7 @@ void Device::CheckRequiredExtensionsSupport(const std::vector<const char*>& requ
     }
 
     // 只有当哈希表为空时，才说明设备完整支持所必需的扩展
-    if (!required_extension_set.empty()) {
-        Throw(std::runtime_error("missing required extension."));
-    }
+    LR_CORE_ASSERT(!required_extension_set.empty(), "missing required extension")
 }
 
 QueueFamilyIndices Device::FindQueueFamilyIndices(const std::vector<VkQueueFamilyProperties> queue_families) const {

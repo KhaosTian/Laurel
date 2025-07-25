@@ -1,5 +1,6 @@
-#include "Laurel/Vulkan/Core/Instance.h"
+#include "pch.h"
 #include "Laurel/Vulkan/Vulkan.h"
+#include "Laurel/Vulkan/Core/Instance.h"
 #include "Laurel/Vulkan/Core/DebugUtilsMessenger.h"
 
 namespace Laurel {

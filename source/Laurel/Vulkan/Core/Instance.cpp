@@ -1,13 +1,13 @@
-#include "Laurel/Vulkan/Core/Instance.h"
-#include "Laurel/Vulkan/Core/Exception.h"
+#include "pch.h"
 #include "Laurel/Vulkan/Vulkan.h"
 #include "Laurel/Core/Window.h"
+#include "Laurel/Vulkan/Core/Instance.h"
 #include "Laurel/Vulkan/Core/Enumerate.h"
 
 namespace Laurel {
 Instance::Instance(const Window& window, const std::vector<const char*>& validation_layers): m_window(window) {
     // 初始化实例扩展
-    m_instance_extensions = window.getRequiredInstanceExtensions();
+    m_instance_extensions = window.GetRequiredInstanceExtensions();
     m_instance_extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 
     // 检查验证层支持
@@ -52,11 +52,7 @@ void Instance::CheckValidationLayersSupport(const std::vector<const char*>& vali
                 break;
             }
         }
-
-        // 不支持所需的验证层
-        if (!found) {
-            Throw(std::runtime_error("Validation layer not supported."));
-        }
+        LR_CORE_ASSERT(found, "Validation layer not supported.")
     }
 }
 

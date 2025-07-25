@@ -31,6 +31,8 @@ class Log {
         s_client_logger->flush_on(spdlog::level::trace);
     }
 
+    inline static void Shutdown() { spdlog::shutdown(); }
+
     inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_core_logger; }
     inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_client_logger; }
 

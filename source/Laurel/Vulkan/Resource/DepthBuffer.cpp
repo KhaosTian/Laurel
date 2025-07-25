@@ -1,6 +1,6 @@
 #include "Laurel/Vulkan/Resource/DepthBuffer.h"
+#include "Laurel/Core/Assert.h"
 #include "Laurel/Vulkan/Core/Device.h"
-#include "Laurel/Vulkan/Core/Exception.h"
 #include "Laurel/Vulkan/Command/CommandPool.h"
 #include "Laurel/Vulkan/Resource/DeviceMemory.h"
 #include "Laurel/Vulkan/Resource/Image.h"
@@ -78,7 +78,7 @@ VkFormat DepthBuffer::FindSupportFormat(const Device&                device,
             return format;
         }
     }
-    // 若无候选格式被支持，抛出异常（通常意味着设备不满足需求）
-    Throw(std::runtime_error("Failed to find supported format. Check if device supports any of the candidate formats."));
+
+    return VK_FORMAT_UNDEFINED; // 如果没有找到合适的格式，返回未定义格式
 }
 } // namespace Laurel

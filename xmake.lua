@@ -45,13 +45,13 @@ target("Laurel")
     add_files(
         "source/*.cpp",
         "source/Laurel/Core/**.cpp",
-        "source/Laurel/Vulkan/**.cpp"
+        "source/Laurel/RHI/**.cpp"
     )
     add_headerfiles(
         "source/*.h",
         "source/Laurel/*.h",
         "source/Laurel/Core/**.h",
-        "source/Laurel/Vulkan/**.h"
+        "source/Laurel/RHI/**.h"
     )
 target_end()
 

@@ -11,11 +11,11 @@ static void glfwErrorCallback(int error, const char* description) {
 Window::Window(const WindowConfig& config): m_config(config) {
     // glfw 初始化
     int success = glfwInit();
-    LR_ASSERT(success == GLFW_TRUE, "GLFW initialization failed");
+    LR_CORE_ASSERT(success == GLFW_TRUE, "GLFW initialization failed");
 
     // 检查glfw对vulkan的支持
     int support = glfwVulkanSupported();
-    LR_ASSERT(support == GLFW_TRUE, "GLFW does not support Vulkan");
+    LR_CORE_ASSERT(support == GLFW_TRUE, "GLFW does not support Vulkan");
 
     // 初始化window hint
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -26,7 +26,7 @@ Window::Window(const WindowConfig& config): m_config(config) {
 
     // 创建window
     m_handle = glfwCreateWindow(config.width, config.height, config.title.c_str(), monitor_ptr, nullptr);
-    LR_ASSERT(m_handle != nullptr, "Failed to create GLFW window");
+    LR_CORE_ASSERT(m_handle != nullptr, "Failed to create GLFW window");
 
     // 设置显示位置
     const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());

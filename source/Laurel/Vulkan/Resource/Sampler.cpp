@@ -1,6 +1,5 @@
 #include "Laurel/Vulkan/Resource/Sampler.h"
-#include "Laurel/Vulkan/Core/Device.h"
-#include "Laurel/Vulkan/Core/Exception.h"
+#include "Laurel/Vulkan/Core/Device.h
 #include "Laurel/Vulkan/Vulkan.h"
 
 namespace Laurel {

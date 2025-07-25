@@ -2,8 +2,7 @@
 #include "Laurel/Vulkan/Resource/DescriptorPool.h"
 #include "Laurel/Vulkan/Resource/DescriptorSetLayout.h"
 #include "Laurel/Vulkan/Resource/DescriptorBinding.h"
-#include "Laurel/Vulkan/Resource/DescriptorSets.h"
-#include "Laurel/Vulkan/Core/Exception.h"
+#include "Laurel/Vulkan/Resource/DescriptorSets.h
 #include "Laurel/Vulkan/Core/Device.h"
 #include "Laurel/Vulkan/Vulkan.h"
 

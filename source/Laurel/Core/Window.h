@@ -1,5 +1,12 @@
 #pragma once
 
+#include <vulkan/vulkan.h>
+#include <GLFW/glfw3.h>
+#include <vector>
+#include <string>
+
+#include "Laurel/Utils/NonCopyable.h"
+
 namespace Laurel {
 class Vector2f;
 
@@ -11,7 +18,7 @@ struct WindowConfig {
     bool        enable_resize;
 };
 
-class Window : NonCopyable{
+class Window: NonCopyable {
   public:
     Window(const WindowConfig& config);
     ~Window();

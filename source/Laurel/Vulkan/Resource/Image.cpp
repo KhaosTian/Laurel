@@ -6,8 +6,7 @@
 #include "Laurel/Vulkan/Resource/DeviceMemory.h"
 #include "Laurel/Vulkan/Command/CommandBuffer.h"
 #include <stdexcept>
-#include "Laurel/Vulkan/Resource/Image.h"
-#include "Laurel/Vulkan/Core/Exception.h"
+#include "Laurel/Vulkan/Resource/Image.h
 
 namespace Laurel {
 Image::Image(const Device& device, VkExtent2D extent, uint32_t mip_level, VkFormat format):
