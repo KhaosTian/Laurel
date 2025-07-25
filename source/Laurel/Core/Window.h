@@ -1,16 +1,14 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
-#include <GLFW/glfw3.h>
 #include <vector>
 #include <string>
 
 #include "Laurel/Utils/NonCopyable.h"
+#include "Laurel/Core/Math.h"
 
 namespace Laurel {
-class Vector2f;
 
-struct WindowConfig {
+struct WindowDesc {
     uint32_t    width;
     uint32_t    height;
     std::string title;
@@ -20,21 +18,21 @@ struct WindowConfig {
 
 class Window: NonCopyable {
   public:
-    Window(const WindowConfig& config);
+    Window(const WindowDesc& desc);
     ~Window();
 
     GLFWwindow*         handle() const { return m_handle; }
-    const WindowConfig& config() const { return m_config; }
+    const WindowDesc& config() const { return m_desc; }
 
-    Vector2f                 GetWindowSize() const;
-    std::vector<const char*> GetRequiredInstanceExtensions() const;
+    Vector2f                 getWindowSize() const;
+    std::vector<const char*> getRequiredInstanceExtensions() const;
 
-    void PollEvents() const;
-    void WaitEvents() const;
-    bool ShouldClose() const;
+    void pollEvents() const;
+    void waitEvents() const;
+    bool shouldClose() const;
 
   private:
-    WindowConfig m_config;
+    WindowDesc m_desc;
     GLFWwindow*  m_handle {};
 };
 

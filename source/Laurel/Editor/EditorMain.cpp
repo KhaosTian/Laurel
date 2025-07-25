@@ -1,37 +1,38 @@
 #include "pch.h"
 
-#include "Laurel/Core/Log.h"
-#include "Laurel/Core/Assert.h"
+#include "Laurel/EntryPoint.h"
+
 #include "EditorMain.h"
 
-std::unique_ptr<Laurel::IApplication> Laurel::CreateApplication(Laurel::ApplicationConfig& config) {
-    return std::make_unique<LaurelEditorApplication>(config);
+EditorApp::EditorApp(Laurel::ApplicationDesc& desc): IApplication(desc) {
 }
 
-LaurelEditorApplication::LaurelEditorApplication(Laurel::ApplicationConfig& config): Laurel::IApplication(config) {
+void EditorApp::onInit() {
+    LR_INFO("onInit called for EditorApp");
 }
 
-void LaurelEditorApplication::OnInit() {
+void EditorApp::onTick() {
 }
 
-void LaurelEditorApplication::OnTick(double delta_seconds) {
+void EditorApp::onShutdown() {
 }
 
-void LaurelEditorApplication::OnDestroy() {
-}
-
-bool LaurelEditorApplication::OnKey(int key, int scancode, int action, int mods) {
+bool EditorApp::onKey(int key, int scancode, int action, int mods) {
     return false;
 }
 
-bool LaurelEditorApplication::OnCursorPosition(double xpos, double ypos) {
+bool EditorApp::onCursorPosition(double pos_x, double pos_y) {
     return false;
 }
 
-bool LaurelEditorApplication::OnMouseButton(int button, int action, int mods) {
+bool EditorApp::onMouseButton(int button, int action, int mods) {
     return false;
 }
 
-bool LaurelEditorApplication::OnScroll(double xoffset, double yoffset) {
+bool EditorApp::onScroll(double offset_x, double offset_y) {
     return false;
+}
+
+int main(int argc, char** argv) {
+    return LaurelMain<EditorApp>(argc, argv);
 }

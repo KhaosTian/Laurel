@@ -5,17 +5,23 @@
 #include "Laurel/Core/Application.h"
 #include "Laurel/Core/Assert.h"
 
-extern std::unique_ptr<Laurel::IApplication> Laurel::CreateApplication(Laurel::ApplicationConfig& config);
+template<typename T>
+concept IsApplication = std::is_base_of_v<Laurel::IApplication, T>;
 
-int main(int argc, char** argv) {
-    Laurel::ApplicationConfig config {};
-    config.name   = "Laurel Application";
-    config.width  = 1280;
-    config.height = 720;
+template<typename AppType> requires IsApplication<AppType>
+int LaurelMain(int argc, char** argv) {
+    Laurel::ApplicationDesc desc {};
+    desc.name   = "Laurel Application";
+    desc.width  = 1280;
+    desc.height = 720;
 
-    auto app = CreateApplication(config);
-    LR_CORE_ASSERT(app != nullptr, "Failed to create application instance");
-    app->Run();
-    app->Shutdown();
+    auto app = std::make_unique<AppType>(desc);
+    {
+        Laurel::Log::init();
+        LR_CORE_ASSERT(app != nullptr, "Failed to create application instance");
+        app->run();
+        Laurel::Log::shutdown();
+    }
+
     return 0;
 }

@@ -2,4 +2,18 @@
 
 #include "Laurel/Core/Application.h"
 
-namespace identifier {}
+namespace Laurel {
+void IApplication::run() {
+    onInit();
+    while (true) {
+        processEvents();
+        onTick();
+    }
+    onShutdown();
+}
+
+void IApplication::processEvents() {
+}
+    
+
+}

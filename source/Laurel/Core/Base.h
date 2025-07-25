@@ -16,4 +16,3 @@
     #define LR_FORCE_INLINE __forceinline
     #define LR_DEBUG_BREAK __debugbreak()
 #endif
-
