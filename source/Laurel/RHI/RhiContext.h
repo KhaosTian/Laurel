@@ -3,19 +3,18 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 
-#include "Laurel/Utils/NonCopyable.h"
-
 namespace Laurel {
-class RHIContext final: NonCopyable {
+class RhiContext {
+    LR_NON_COPIABLE(RhiContext)
   public:
-    RHIContext(const std::vector<const char*>& requiredExtensions);
-    ~RHIContext();
+    explicit RhiContext(const std::vector<const char*>& required_extensions);
+    ~RhiContext() = default;
 
-    VkInstance       instance() { return m_instance; }
-    VkDevice         device() { return m_device; }
-    VkPhysicalDevice physical_device() { return m_physical_device; }
-    VkQueue          graphics_queue() { return m_graphics_queue; }
-    VkQueue          present_queue() { return m_present_queue; }
+    VkInstance       instance() const { return m_instance; }
+    VkDevice         device() const { return m_device; }
+    VkPhysicalDevice physicalDevice() const { return m_physical_device; }
+    VkQueue          graphicsQueue() const { return m_graphics_queue; }
+    VkQueue          presentQueue() const { return m_present_queue; }
 
   private:
     VkInstance       m_instance { nullptr };
@@ -27,13 +26,13 @@ class RHIContext final: NonCopyable {
     VkDebugUtilsMessengerEXT m_debug_messenger { nullptr };
 
 #ifdef LR_DEBUG
-    const bool m_enableValidationLayers = true;
+    const bool m_enable_validation_layers = true;
 #else
     const bool m_enableValidationLayers = false;
 #endif
 
   private:
-    void createInstance(const std::vector<const char*>& requiredExtensions);
+    void createInstance();
     void pickPhysicalDevice();
     void createLogicalDevice();
 

@@ -18,7 +18,7 @@ void EditorApp::onShutdown() {
 }
 
 bool EditorApp::onKey(int key, int scancode, int action, int mods) {
-    return false;
+      return false;
 }
 
 bool EditorApp::onCursorPosition(double pos_x, double pos_y) {

@@ -3,8 +3,9 @@
 #include "Laurel.h"
 
 class EditorApp final: public Laurel::IApplication {
+    LR_NON_COPIABLE(EditorApp)
   public:
-    EditorApp(Laurel::ApplicationDesc& desc);
+    explicit EditorApp(Laurel::ApplicationDesc& desc);
     ~EditorApp() override = default;
     void onInit() override;
     void onTick() override;

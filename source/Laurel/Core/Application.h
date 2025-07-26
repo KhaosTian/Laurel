@@ -13,9 +13,9 @@ struct ApplicationDesc {
 };
 
 class IApplication {
+    LR_NON_COPIABLE(IApplication)
 public:
-    IApplication(ApplicationDesc& desc) {}
-
+    explicit IApplication(ApplicationDesc& desc) {}
     virtual ~IApplication() = default;
 
     void run();
