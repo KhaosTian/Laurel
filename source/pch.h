@@ -1,10 +1,5 @@
 #pragma once
 
-//  平台库
-#ifdef LR_PLATFORM_WINDOWS
-    #include <windows.h>
-#endif
-
 // 标准库
 #include <algorithm>
 #include <array>

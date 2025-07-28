@@ -40,10 +40,16 @@ RhiContext::RhiContext(const Window& window): m_window(window) {
     CheckValidationLayersSupport();
 
     CreateInstance();
+    
     CreateSurface();
-
+    CreateDebugMessenger();
+    
     PickPhysicalDevices();
+    
+    CheckDeviceExtensionSupport();
+    
     FindQueueFamilyIndices();
+    
     CreateLogicalDevice();
 }
 
@@ -210,7 +216,7 @@ void RhiContext::CreateLogicalDevice() {
     LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan logical device: {}", VkResultToString(result))
 }
 
-void RhiContext::SetupDebugMessenger() {
+void RhiContext::CreateDebugMessenger() {
     VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
     createInfo.sType                              = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
     createInfo.messageSeverity                    = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;

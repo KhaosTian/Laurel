@@ -9,7 +9,7 @@ namespace Laurel {
 class RhiContext {
     LR_NON_COPIABLE(RhiContext)
   public:
-    RhiContext(const Window& window);
+    explicit RhiContext(const Window& window);
     ~RhiContext() = default;
 
     VkInstance       GetInstance() const { return m_instance; }
@@ -51,6 +51,6 @@ class RhiContext {
 
     void PickPhysicalDevices();
     void FindQueueFamilyIndices();
-    void SetupDebugMessenger();
+    void CreateDebugMessenger();
 };
 } // namespace Laurel

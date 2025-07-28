@@ -31,7 +31,18 @@ local include_dirs= {
 
 local link_dirs = {
     "external/glfw/lib-vc2022",
-    "external/vulkan"
+    "external/vulkan/lib"
+}
+
+local external_links = {
+    "glfw3",
+    "vulkan-1"
+}
+
+local system_links = {
+    "user32", 
+    "gdi32", 
+    "shell32"
 }
 
 target("Laurel")
@@ -41,6 +52,8 @@ target("Laurel")
 
     add_includedirs(include_dirs)
     add_linkdirs(link_dirs)
+    add_links(external_links)
+    add_syslinks(system_links)
 
     add_files(
         "source/*.cpp",
@@ -60,9 +73,7 @@ target("LaurelEditor")
 
     add_deps("Laurel")
     add_includedirs(include_dirs)
-    add_linkdirs(link_dirs)
 
     add_files("source/Laurel/Editor/*.cpp")
     add_headerfiles("source/Laurel/Editor/*.h")
-
 target_end()
