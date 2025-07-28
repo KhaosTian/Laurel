@@ -19,7 +19,7 @@ class Log {
             fileSink->set_pattern("[%Y-%m-%d %T%e] [%n] [%l] [%s:%#] %v");
             sinks.push_back(fileSink);
         }
-
+ 
         s_coreLogger = std::make_shared<spdlog::logger>("CORE", begin(sinks), end(sinks));
         spdlog::register_logger(s_coreLogger);
         s_coreLogger->set_level(static_cast<spdlog::level::level_enum>(level));

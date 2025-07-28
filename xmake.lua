@@ -44,16 +44,14 @@ target("Laurel")
 
     add_files(
         "source/*.cpp",
-        "source/Laurel/**.cpp"
-    )
-    remove_files(
-        "source/Laurel/Editor/**.cpp"
+        "source/Laurel/Core/*.cpp",
+        "source/Laurel/Rhi/*.cpp"
     )
     add_headerfiles(
         "source/*.h",
         "source/Laurel/*.h",
-        "source/Laurel/Core/**.h",
-        "source/Laurel/Rhi/**.h"
+        "source/Laurel/Core/*.h",
+        "source/Laurel/Rhi/*.h"
     )
 target_end()
 
@@ -64,7 +62,7 @@ target("LaurelEditor")
     add_includedirs(include_dirs)
     add_linkdirs(link_dirs)
 
-    add_files("source/Laurel/Editor/**.cpp")
-    add_headerfiles("source/Laurel/Editor/**.h")
+    add_files("source/Laurel/Editor/*.cpp")
+    add_headerfiles("source/Laurel/Editor/*.h")
 
 target_end()
