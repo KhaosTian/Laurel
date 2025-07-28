@@ -17,12 +17,9 @@
     #define LR_DEBUG_BREAK __debugbreak()
 #endif
 
-#ifndef LR_NONCOPYABLE(ClassName)
 #define LR_NON_COPIABLE(ClassName) \
-    private:\
-        ClassName(const ClassName&) = delete;\
-        ClassName& operator=(const ClassName&) = delete;\
-        ClassName(ClassName&&) = delete;\
-        ClassName& operator=(ClassName&&) = delete;
-#endif
-
+  private: \
+    ClassName(const ClassName&)            = delete; \
+    ClassName& operator=(const ClassName&) = delete; \
+    ClassName(ClassName&&)                 = delete; \
+    ClassName& operator=(ClassName&&)      = delete;

@@ -14,6 +14,5 @@ void IApplication::Run() {
 
 void IApplication::ProcessEvents() {
 }
-    
 
-}
+} // namespace Laurel

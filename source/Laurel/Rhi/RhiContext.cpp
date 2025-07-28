@@ -1,6 +1,8 @@
-#include "Laurel/Core/Window.h"
 #include "pch.h"
+#include "Laurel/Core/Assert.h"
+#include "Laurel/Core/Window.h"
 #include "Laurel/RHI/RhiContext.h"
+#include "Laurel/Rhi/RhiUtils.h"
 
 namespace Laurel {
 
@@ -54,8 +56,8 @@ void RhiContext::CreateInstance() {
     createInfo.enabledLayerCount       = static_cast<uint32_t>(s_ValidationLayers.size());
     createInfo.ppEnabledLayerNames     = s_ValidationLayers.data();
 
-    int result = vkCreateInstance(&createInfo, nullptr, &m_instance);
-    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan instance: {}", result)
+    VkResult result = vkCreateInstance(&createInfo, nullptr, &m_instance);
+    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan instance: {}", VkResultToString(result));
 }
 
 void RhiContext::PickPhysicalDevices() {
@@ -83,7 +85,7 @@ void RhiContext::PickPhysicalDevices() {
 void RhiContext::CreateSurface() {
     // 创建Vulkan表面
     VkResult result = glfwCreateWindowSurface(m_instance, m_window.GetHandle(), nullptr, &m_surface);
-    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan surface: {}", result);
+    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan surface: {}", VkResultToString(result));
 }
 
 void RhiContext::CreateLogicalDevice() {

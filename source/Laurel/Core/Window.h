@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 
+#include <GLFW/glfw3.h>
+
+#include "Laurel/Core/Base.h"
 #include "Laurel/Core/Math.h"
 
 namespace Laurel {
