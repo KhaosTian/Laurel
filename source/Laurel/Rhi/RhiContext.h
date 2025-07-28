@@ -42,8 +42,8 @@ class RhiContext {
 #endif
 
   private:
-    void CheckValidationLayersSupport();
-    void CheckDeviceExtensionSupport();
+    void CheckValidationLayersSupport() const;
+    void CheckDeviceExtensionSupport() const;
 
     void CreateInstance();
     void CreateSurface();
