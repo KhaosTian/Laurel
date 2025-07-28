@@ -44,8 +44,10 @@ target("Laurel")
 
     add_files(
         "source/*.cpp",
-        "source/Laurel/Core/**.cpp",
-        "source/Laurel/Rhi/**.cpp"
+        "source/Laurel/**.cpp"
+    )
+    remove_files(
+        "source/Laurel/Editor/**.cpp"
     )
     add_headerfiles(
         "source/*.h",
