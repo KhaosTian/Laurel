@@ -55,6 +55,6 @@ class RhiContext {
 
     void PickPhysicalDevices();
     QueueFamilyIndices FindQueueFamilyIndices();
-    void CreateDebugMessenger();
+    void SetupDebugMessenger();
 };
 } // namespace Laurel
