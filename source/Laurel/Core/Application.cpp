@@ -16,7 +16,7 @@ Application::Application(const ApplicationDesc& desc) {
 
 void Application::Run() {
     OnInit();
-    while (true) {
+    while (!m_window->ShouldClose()) {
         ProcessEvents();
         OnTick();
     }
@@ -33,6 +33,7 @@ void Application::OnTick() {
 }
 
 void Application::OnShutdown() {
+
 }
 
 } // namespace Laurel

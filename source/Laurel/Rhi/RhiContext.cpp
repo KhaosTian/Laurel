@@ -41,24 +41,22 @@ RhiContext::RhiContext(const Window& window): m_window(window) {
     SetupDebugMessenger();
 
     CreateSurface();
-    
-    PickPhysicalDevices();
-    
+
+    PickPhysicalDevice();
+
     CheckDeviceExtensionSupport();
-    
-    FindQueueFamilyIndices();
-    
+
     CreateLogicalDevice();
 }
 
 std::vector<const char*> RhiContext::GetRequiredExtensions() const {
-	uint32_t extensionCount = 0;
-	const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&extensionCount);
-	std::vector<const char*> extensions(glfwExtensions, glfwExtensions + extensionCount);
-	if (m_enableValidationLayers) {
-		extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-	}
-	return extensions;
+    uint32_t                 extensionCount = 0;
+    const char**             glfwExtensions = glfwGetRequiredInstanceExtensions(&extensionCount);
+    std::vector<const char*> extensions(glfwExtensions, glfwExtensions + extensionCount);
+    if (m_enableValidationLayers) {
+        extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    }
+    return extensions;
 }
 
 bool RhiContext::CheckValidationLayersSupport() const {
@@ -70,33 +68,32 @@ bool RhiContext::CheckValidationLayersSupport() const {
     std::vector<VkLayerProperties> properties(layerCount);
     vkEnumerateInstanceLayerProperties(&layerCount, properties.data());
 
-	// 检查Vulkan是否支持验证层
-	for (auto layerName : m_validationLayers) {
-		bool found = false;
-		for (const auto& property : properties) {
-			if (strcmp(property.layerName, layerName) == 0) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			return false;
-		}
-	}
+    // 检查Vulkan是否支持验证层
+    for (auto layerName: m_validationLayers) {
+        bool found = false;
+        for (const auto& property: properties) {
+            if (strcmp(property.layerName, layerName) == 0) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            return false;
+        }
+    }
 }
 
-
 void RhiContext::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
-	createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-	createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-	createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-	createInfo.pfnUserCallback = DebugCallback;
- }
+    createInfo                 = {};
+    createInfo.sType           = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+    createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+    createInfo.messageType     = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+    createInfo.pfnUserCallback = DebugCallback;
+}
 
 void RhiContext::CreateInstance() {
     if (m_enableValidationLayers && !CheckValidationLayersSupport()) {
-        throw std::runtime_error("validation layers requested, but not available!");
+        LR_CORE_ERROR("validation layers requested, but not available!");
     }
 
     // 创建应用信息
@@ -110,38 +107,39 @@ void RhiContext::CreateInstance() {
 
     // 创建实例创建信息
     VkInstanceCreateInfo createInfo {};
-    createInfo.sType                   = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-    createInfo.pApplicationInfo        = &appInfo;
+    createInfo.sType            = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+    createInfo.pApplicationInfo = &appInfo;
 
     // 获取所需的实例扩展
-    auto extensions = GetRequiredExtensions();
+    auto extensions                    = GetRequiredExtensions();
     createInfo.enabledExtensionCount   = static_cast<uint32_t>(extensions.size());
     createInfo.ppEnabledExtensionNames = extensions.data();
 
     // 设置验证层
-	VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo {};
-	if (m_enableValidationLayers) {
-		createInfo.enabledLayerCount = static_cast<uint32_t>(m_validationLayers.size());
-		createInfo.ppEnabledLayerNames = m_validationLayers.data();
+    VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo {};
+    if (m_enableValidationLayers) {
+        createInfo.enabledLayerCount   = static_cast<uint32_t>(m_validationLayers.size());
+        createInfo.ppEnabledLayerNames = m_validationLayers.data();
 
-		PopulateDebugMessengerCreateInfo(debugCreateInfo);
-		createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
-	}
-	else {
-		createInfo.enabledLayerCount = 0;
-		createInfo.pNext = nullptr;
-	}
+        PopulateDebugMessengerCreateInfo(debugCreateInfo);
+        createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
+    } else {
+        createInfo.enabledLayerCount = 0;
+        createInfo.pNext             = nullptr;
+    }
 
     if (vkCreateInstance(&createInfo, nullptr, &m_instance) != VK_SUCCESS) {
-        throw std::runtime_error("failed to create instance");
+        LR_CORE_ERROR("failed to create instance");
     }
 }
 
-void RhiContext::PickPhysicalDevices() {
+void RhiContext::PickPhysicalDevice() {
     // 获取物理设备列表
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
-    LR_CORE_ASSERT(deviceCount > 0, "No Vulkan physical devices found");
+    if (deviceCount == 0) {
+        LR_CORE_ERROR("failed to find GPUs with Vulkan support!");
+    }
     std::vector<VkPhysicalDevice> physicalDevices(deviceCount);
     vkEnumeratePhysicalDevices(m_instance, &deviceCount, physicalDevices.data());
 
@@ -190,49 +188,55 @@ bool RhiContext::CheckDeviceExtensionSupport() const {
     LR_CORE_ASSERT(requiredExtensions.empty(), "Vulkan device extensions not supported: {}", unsupportedExtensions)
 }
 
-QueueFamilyIndices RhiContext::FindQueueFamilyIndices() {
+bool RhiContext::IsDeviceSuitable(VkPhysicalDevice device) const {
+    return FindQueueFamilies(device).IsComplete();
+}
+
+QueueFamilyIndices RhiContext::FindQueueFamilies(VkPhysicalDevice device) const {
+    QueueFamilyIndices indices;
+
     // 获取队列族属性
     uint32_t queueFamilyCount = 0;
-    vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyCount, nullptr);
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
     LR_CORE_ASSERT(queueFamilyCount > 0, "No Vulkan queue families found");
     std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-    vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyCount, queueFamilies.data());
+    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
 
     // 寻找支持图形、呈现和计算的队列族，记录下它们的索引
     for (uint32_t i = 0; i < queueFamilyCount; ++i) {
         const auto& queueFamily = queueFamilies[i];
-        if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) m_queueIndices.graphics = i;
-        if (queueFamily.queueFlags & VK_QUEUE_COMPUTE_BIT) m_queueIndices.compute = i;
+        if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) indices.graphics = i;
+        if (queueFamily.queueFlags & VK_QUEUE_COMPUTE_BIT) indices.compute = i;
 
         // 检查是否支持呈现
         VkBool32 presentSupport = false;
-        vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, i, m_surface, &presentSupport);
-        if (presentSupport) m_queueIndices.present = i;
+        vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_surface, &presentSupport);
+        if (presentSupport) indices.present = i;
 
-        // 如果所有队列族索引都已找到，则提前返回
-        if (m_queueIndices.IsComplete()) return;
+        if (indices.IsComplete()) break;
     }
+    return indices;
 }
 
 void RhiContext::CreateLogicalDevice() {
-	const std::vector<float> queuePriorities = { 1.0f };
-	std::set<uint32_t>       uniqueQueueFamilies = { m_queueIndices.graphics.value(),m_queueIndices.graphics.value(),m_queueIndices.compute.value() };
-
     // 队列创建信息
+    QueueFamilyIndices indices             = FindQueueFamilies(m_physicalDevice);
+    std::set<uint32_t> uniqueQueueFamilies = { indices.graphics.value(), indices.graphics.value(), indices.compute.value() };
+
+    float queuePriorities = { 1.0f };
+
     std::vector<VkDeviceQueueCreateInfo> queueCreateInfos {};
     for (const auto& queueFamily: uniqueQueueFamilies) {
         VkDeviceQueueCreateInfo queueCreateInfo {};
         queueCreateInfo.sType            = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
         queueCreateInfo.queueFamilyIndex = queueFamily;
         queueCreateInfo.queueCount       = 1;
-        queueCreateInfo.pQueuePriorities = queuePriorities.data();
+        queueCreateInfo.pQueuePriorities = &queuePriorities;
         queueCreateInfos.push_back(queueCreateInfo);
     }
 
     // 设备特性
     VkPhysicalDeviceFeatures physicalDeviceFeatures {};
-    physicalDeviceFeatures.samplerAnisotropy        = VK_TRUE;
-    physicalDeviceFeatures.fragmentStoresAndAtomics = VK_TRUE;
 
     // 设备创建信息
     VkDeviceCreateInfo deviceCreateInfo {};
@@ -253,8 +257,8 @@ void RhiContext::SetupDebugMessenger() {
     VkDebugUtilsMessengerCreateInfoEXT createInfo;
     PopulateDebugMessengerCreateInfo(createInfo);
 
-	if (CreateDebugUtilsMessengerEXT(m_instance, &createInfo, nullptr, &m_debugMessenger) != VK_SUCCESS) {
-		throw std::runtime_error("failed to set up debug messenger");
-	}
+    if (CreateDebugUtilsMessengerEXT(m_instance, &createInfo, nullptr, &m_debugMessenger) != VK_SUCCESS) {
+        LR_CORE_ERROR("failed to set up debug messenger");
+    }
 }
 } // namespace Laurel

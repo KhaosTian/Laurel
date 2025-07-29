@@ -27,7 +27,6 @@ class RhiContext {
     VkQueue            m_graphicsQueue { nullptr };
     VkQueue            m_presentQueue { nullptr };
     VkQueue            m_computeQueue { nullptr };
-    QueueFamilyIndices m_queueIndices {};
     VkSurfaceKHR       m_surface { nullptr };
 
     VkDebugUtilsMessengerEXT m_debugMessenger { nullptr };
@@ -53,8 +52,11 @@ class RhiContext {
     void CreateSurface();
     void CreateLogicalDevice();
 
-    void PickPhysicalDevices();
-    QueueFamilyIndices FindQueueFamilyIndices();
+    bool IsDeviceSuitable(VkPhysicalDevice device) const;
+    QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device) const;
+    void PickPhysicalDevice();
+
+
     void SetupDebugMessenger();
 };
 } // namespace Laurel
