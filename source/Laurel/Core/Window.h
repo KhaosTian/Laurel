@@ -28,7 +28,6 @@ class Window {
     const WindowDesc& GetDesc() const { return m_desc; }
 
     Vector2i                 GetWindowSize() const;
-    std::vector<const char*> GetRequiredInstanceExtensions() const;
 
     void PollEvents() const;
     void WaitEvents() const;

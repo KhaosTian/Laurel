@@ -37,12 +37,10 @@ namespace {
 } // namespace
 
 RhiContext::RhiContext(const Window& window): m_window(window) {
-    CheckValidationLayersSupport();
-
     CreateInstance();
-    
+    SetupDebugMessenger();
+
     CreateSurface();
-    CreateDebugMessenger();
     
     PickPhysicalDevices();
     
@@ -53,32 +51,53 @@ RhiContext::RhiContext(const Window& window): m_window(window) {
     CreateLogicalDevice();
 }
 
-void RhiContext::CheckValidationLayersSupport() const {
+std::vector<const char*> RhiContext::GetRequiredExtensions() const {
+	uint32_t extensionCount = 0;
+	const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&extensionCount);
+	std::vector<const char*> extensions(glfwExtensions, glfwExtensions + extensionCount);
+	if (m_enableValidationLayers) {
+		extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+	}
+	return extensions;
+}
+
+bool RhiContext::CheckValidationLayersSupport() const {
     if (!m_enableValidationLayers) return;
 
     // 获取可用的验证层属性
-    uint32_t propertyCount;
-    vkEnumerateInstanceLayerProperties(&propertyCount, nullptr);
-    std::vector<VkLayerProperties> properties(propertyCount);
-    vkEnumerateInstanceLayerProperties(&propertyCount, properties.data());
+    uint32_t layerCount;
+    vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+    std::vector<VkLayerProperties> properties(layerCount);
+    vkEnumerateInstanceLayerProperties(&layerCount, properties.data());
 
-    // 检查Vulkan是否支持验证层
-    for (auto layerName: m_validationLayers) {
-        bool found = false;
-        for (const auto& property: properties) {
-            if (strcmp(property.layerName, layerName) == 0) {
-                found = true;
-                break;
-            }
-        }
-        LR_CORE_ASSERT(found == true, "Validation layers not supported");
-    }
+	// 检查Vulkan是否支持验证层
+	for (auto layerName : m_validationLayers) {
+		bool found = false;
+		for (const auto& property : properties) {
+			if (strcmp(property.layerName, layerName) == 0) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			return false;
+		}
+	}
 }
 
+
+void RhiContext::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
+	createInfo = {};
+	createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+	createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+	createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+	createInfo.pfnUserCallback = DebugCallback;
+ }
+
 void RhiContext::CreateInstance() {
-    // 获取所需的实例扩展
-    auto extensions = m_window.GetRequiredInstanceExtensions();
-    extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    if (m_enableValidationLayers && !CheckValidationLayersSupport()) {
+        throw std::runtime_error("validation layers requested, but not available!");
+    }
 
     // 创建应用信息
     VkApplicationInfo appInfo {};
@@ -93,13 +112,29 @@ void RhiContext::CreateInstance() {
     VkInstanceCreateInfo createInfo {};
     createInfo.sType                   = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo        = &appInfo;
+
+    // 获取所需的实例扩展
+    auto extensions = GetRequiredExtensions();
     createInfo.enabledExtensionCount   = static_cast<uint32_t>(extensions.size());
     createInfo.ppEnabledExtensionNames = extensions.data();
-    createInfo.enabledLayerCount       = static_cast<uint32_t>(m_validationLayers.size());
-    createInfo.ppEnabledLayerNames     = m_validationLayers.data();
 
-    VkResult result = vkCreateInstance(&createInfo, nullptr, &m_instance);
-    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan instance: {}", VkResultToString(result))
+    // 设置验证层
+	VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo {};
+	if (m_enableValidationLayers) {
+		createInfo.enabledLayerCount = static_cast<uint32_t>(m_validationLayers.size());
+		createInfo.ppEnabledLayerNames = m_validationLayers.data();
+
+		PopulateDebugMessengerCreateInfo(debugCreateInfo);
+		createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
+	}
+	else {
+		createInfo.enabledLayerCount = 0;
+		createInfo.pNext = nullptr;
+	}
+
+    if (vkCreateInstance(&createInfo, nullptr, &m_instance) != VK_SUCCESS) {
+        throw std::runtime_error("failed to create instance");
+    }
 }
 
 void RhiContext::PickPhysicalDevices() {
@@ -130,7 +165,7 @@ void RhiContext::CreateSurface() {
     LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan surface: {}", VkResultToString(result))
 }
 
-void RhiContext::CheckDeviceExtensionSupport() const {
+bool RhiContext::CheckDeviceExtensionSupport() const {
     // 获取物理设备支持的扩展列表
     uint32_t extensionCount = 0;
     vkEnumerateDeviceExtensionProperties(m_physicalDevice, nullptr, &extensionCount, nullptr);
@@ -155,7 +190,7 @@ void RhiContext::CheckDeviceExtensionSupport() const {
     LR_CORE_ASSERT(requiredExtensions.empty(), "Vulkan device extensions not supported: {}", unsupportedExtensions)
 }
 
-void RhiContext::FindQueueFamilyIndices() {
+QueueFamilyIndices RhiContext::FindQueueFamilyIndices() {
     // 获取队列族属性
     uint32_t queueFamilyCount = 0;
     vkGetPhysicalDeviceQueueFamilyProperties(m_physicalDevice, &queueFamilyCount, nullptr);
@@ -180,18 +215,15 @@ void RhiContext::FindQueueFamilyIndices() {
 }
 
 void RhiContext::CreateLogicalDevice() {
-    const std::vector<float> queuePriorities = { 1.0f };
-    std::set<uint32_t>       queueFamilyIndices {};
-    if (m_queueIndices.graphics.has_value()) queueFamilyIndices.insert(m_queueIndices.graphics.value());
-    if (m_queueIndices.present.has_value()) queueFamilyIndices.insert(m_queueIndices.present.value());
-    if (m_queueIndices.compute.has_value()) queueFamilyIndices.insert(m_queueIndices.compute.value());
+	const std::vector<float> queuePriorities = { 1.0f };
+	std::set<uint32_t>       uniqueQueueFamilies = { m_queueIndices.graphics.value(),m_queueIndices.graphics.value(),m_queueIndices.compute.value() };
 
     // 队列创建信息
     std::vector<VkDeviceQueueCreateInfo> queueCreateInfos {};
-    for (const auto& queueFamilyIndex: queueFamilyIndices) {
+    for (const auto& queueFamily: uniqueQueueFamilies) {
         VkDeviceQueueCreateInfo queueCreateInfo {};
         queueCreateInfo.sType            = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        queueCreateInfo.queueFamilyIndex = queueFamilyIndex;
+        queueCreateInfo.queueFamilyIndex = queueFamily;
         queueCreateInfo.queueCount       = 1;
         queueCreateInfo.pQueuePriorities = queuePriorities.data();
         queueCreateInfos.push_back(queueCreateInfo);
@@ -216,15 +248,13 @@ void RhiContext::CreateLogicalDevice() {
     LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan logical device: {}", VkResultToString(result))
 }
 
-void RhiContext::CreateDebugMessenger() {
-    VkDebugUtilsMessengerCreateInfoEXT createInfo = {};
-    createInfo.sType                              = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-    createInfo.messageSeverity                    = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-    createInfo.messageType                        = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
-    createInfo.pfnUserCallback                    = DebugCallback;
-    createInfo.pUserData                          = nullptr;
+void RhiContext::SetupDebugMessenger() {
+    if (!m_enableValidationLayers) return;
+    VkDebugUtilsMessengerCreateInfoEXT createInfo;
+    PopulateDebugMessengerCreateInfo(createInfo);
 
-    VkResult result = CreateDebugUtilsMessengerEXT(m_instance, &createInfo, nullptr, &m_debugMessenger);
-    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to set up debug messenger: {}", VkResultToString(result))
+	if (CreateDebugUtilsMessengerEXT(m_instance, &createInfo, nullptr, &m_debugMessenger) != VK_SUCCESS) {
+		throw std::runtime_error("failed to set up debug messenger");
+	}
 }
 } // namespace Laurel

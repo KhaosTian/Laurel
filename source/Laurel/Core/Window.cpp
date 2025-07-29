@@ -77,16 +77,6 @@ Vector2i Window::GetWindowSize() const {
     return Vector2i { width, height };
 }
 
-std::vector<const char*> Window::GetRequiredInstanceExtensions() const {
-    if (!m_initialized) return {};
-
-    uint32_t extension_count = 0;
-    if (const char** required_extensions = glfwGetRequiredInstanceExtensions(&extension_count)) {
-        return { required_extensions, required_extensions + extension_count };
-    }
-    return {};
-}
-
 void Window::PollEvents() const {
     glfwPollEvents();
 }

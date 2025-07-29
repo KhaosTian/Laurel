@@ -42,15 +42,19 @@ class RhiContext {
 #endif
 
   private:
-    void CheckValidationLayersSupport() const;
-    void CheckDeviceExtensionSupport() const;
+    std::vector<const char*> GetRequiredExtensions() const;
+
+    void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+
+    bool CheckValidationLayersSupport() const;
+    bool CheckDeviceExtensionSupport() const;
 
     void CreateInstance();
     void CreateSurface();
     void CreateLogicalDevice();
 
     void PickPhysicalDevices();
-    void FindQueueFamilyIndices();
+    QueueFamilyIndices FindQueueFamilyIndices();
     void CreateDebugMessenger();
 };
 } // namespace Laurel
