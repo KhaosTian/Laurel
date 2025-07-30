@@ -11,12 +11,12 @@ class Log {
         std::vector<spdlog::sink_ptr> sinks;
 
         auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        consoleSink->set_pattern("%^[%Y-%m-%d %T%e] [%n] [%l] [%s:%#] %v%$");
+        consoleSink->set_pattern("%^[%Y-%m-%d %T%e] %v%$");
         sinks.push_back(consoleSink);
 
         if (logFile) {
             auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFile.value(), true);
-            fileSink->set_pattern("[%Y-%m-%d %T%e] [%n] [%l] [%s:%#] %v");
+            fileSink->set_pattern("[%Y-%m-%d %T%e] %v");
             sinks.push_back(fileSink);
         }
  

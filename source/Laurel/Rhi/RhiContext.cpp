@@ -60,7 +60,7 @@ std::vector<const char*> RhiContext::GetRequiredExtensions() const {
 }
 
 bool RhiContext::CheckValidationLayersSupport() const {
-    if (!m_enableValidationLayers) return;
+    if (!m_enableValidationLayers) return false;
 
     // 获取可用的验证层属性
     uint32_t layerCount;
@@ -81,6 +81,7 @@ bool RhiContext::CheckValidationLayersSupport() const {
             return false;
         }
     }
+    return true;
 }
 
 void RhiContext::PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
@@ -128,18 +129,15 @@ void RhiContext::CreateInstance() {
         createInfo.pNext             = nullptr;
     }
 
-    if (vkCreateInstance(&createInfo, nullptr, &m_instance) != VK_SUCCESS) {
-        LR_CORE_ERROR("failed to create instance");
-    }
+    VK_CHECK(vkCreateInstance(&createInfo, nullptr, &m_instance), "failed to create instance");
 }
 
 void RhiContext::PickPhysicalDevice() {
     // 获取物理设备列表
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(m_instance, &deviceCount, nullptr);
-    if (deviceCount == 0) {
-        LR_CORE_ERROR("failed to find GPUs with Vulkan support!");
-    }
+    LR_CORE_ASSERT(deviceCount > 0, "failed to find GPUs with Vulkan support");
+    
     std::vector<VkPhysicalDevice> physicalDevices(deviceCount);
     vkEnumeratePhysicalDevices(m_instance, &deviceCount, physicalDevices.data());
 
@@ -159,8 +157,7 @@ void RhiContext::PickPhysicalDevice() {
 
 void RhiContext::CreateSurface() {
     // 创建Vulkan表面
-    VkResult result = glfwCreateWindowSurface(m_instance, m_window.GetHandle(), nullptr, &m_surface);
-    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan surface: {}", VkResultToString(result))
+    VK_CHECK(glfwCreateWindowSurface(m_instance, m_window.GetHandle(), nullptr, &m_surface), "failed to create surface")
 }
 
 bool RhiContext::CheckDeviceExtensionSupport() const {
@@ -177,15 +174,7 @@ bool RhiContext::CheckDeviceExtensionSupport() const {
         requiredExtensions.erase(availableExtension.extensionName);
     }
 
-    if (requiredExtensions.empty()) return;
-
-    // 拼接未被支持的扩展的信息
-    std::string unsupportedExtensions;
-    for (const auto& extension: requiredExtensions) {
-        unsupportedExtensions += std::string(extension) + ", ";
-    }
-
-    LR_CORE_ASSERT(requiredExtensions.empty(), "Vulkan device extensions not supported: {}", unsupportedExtensions)
+    return requiredExtensions.empty();
 }
 
 bool RhiContext::IsDeviceSuitable(VkPhysicalDevice device) const {
@@ -248,8 +237,7 @@ void RhiContext::CreateLogicalDevice() {
     deviceCreateInfo.enabledExtensionCount   = static_cast<uint32_t>(m_deviceExtensions.size());
     deviceCreateInfo.enabledLayerCount       = 0;
 
-    VkResult result = vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device);
-    LR_CORE_ASSERT(result == VK_SUCCESS, "Failed to create Vulkan logical device: {}", VkResultToString(result))
+    VK_CHECK(vkCreateDevice(m_physicalDevice, &deviceCreateInfo, nullptr, &m_device), "failed to create logical device")
 }
 
 void RhiContext::SetupDebugMessenger() {
@@ -257,8 +245,6 @@ void RhiContext::SetupDebugMessenger() {
     VkDebugUtilsMessengerCreateInfoEXT createInfo;
     PopulateDebugMessengerCreateInfo(createInfo);
 
-    if (CreateDebugUtilsMessengerEXT(m_instance, &createInfo, nullptr, &m_debugMessenger) != VK_SUCCESS) {
-        LR_CORE_ERROR("failed to set up debug messenger");
-    }
+    VK_CHECK(CreateDebugUtilsMessengerEXT(m_instance, &createInfo, nullptr, &m_debugMessenger), "failed to set up debug messenger");
 }
 } // namespace Laurel

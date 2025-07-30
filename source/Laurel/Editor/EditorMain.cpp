@@ -2,6 +2,7 @@
 #include <Laurel/EntryPoint.h>
 #include <Laurel/Core/Window.h>
 #include <Laurel/Rhi/RhiContext.h>
+#include <Laurel/Rhi/RhiUtils.h>
 
 class EditorApp final: public Laurel::Application {
     LR_NON_COPIABLE(EditorApp)

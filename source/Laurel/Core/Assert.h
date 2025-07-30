@@ -11,14 +11,14 @@
     #define LR_ASSERT(x, ...) \
         { \
             if (!(x)) { \
-                LR_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
+                LR_ERROR(__VA_ARGS__); \
                 LR_DEBUG_BREAK; \
             } \
         }
     #define LR_CORE_ASSERT(x, ...) \
         { \
             if (!(x)) { \
-                LR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
+                LR_CORE_ERROR(__VA_ARGS__); \
                 LR_DEBUG_BREAK; \
             } \
         }
